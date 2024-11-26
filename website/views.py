@@ -1,7 +1,11 @@
+from datetime import date, timezone
 from venv import logger
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.contrib.auth import *
 from django.contrib import messages
+
+from website.models import Member
 # Create your views here.
 def home(request):
     """Handle login form submission and authentication."""
@@ -46,7 +50,44 @@ def home(request):
     return render(request, 'home.html', {})
 
 def register_user(request):
-    return render(request, 'register.html', {})
+    if request.method == 'POST':
+        # Get form data
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        
+        # Check if username already exists
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username already exists')
+            return render(request, 'register.html')
+        
+        # Check if email already exists
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email already exists')
+            return render(request, 'register.html')
+        
+        # Create user
+        user = User.objects.create_user(
+            username=username,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            email=email
+        )
+        
+        # Create member
+        Member.objects.create(
+            user=user,
+            phone=phone,
+            membership_date=date.today()  # Use date.today()
+        )
+        
+        messages.success(request, 'Registration Successful!')
+    
+    return render(request, 'register.html')
 
 def logout_user(request):
     logout(request)  # Logs out the user
