@@ -2,9 +2,9 @@
 
 from django.conf import settings
 import django.core.validators
+import datetime
 from django.db import migrations, models
 import django.db.models.deletion
-
 
 class Migration(migrations.Migration):
 
@@ -116,5 +116,14 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name='bookcopy',
             constraint=models.UniqueConstraint(fields=('book', 'copy_number'), name='unique_book_copy'),
+        ),
+        migrations.CreateModel(
+            name='Member',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('phone', models.CharField(max_length=15)),
+                ('membership_date', models.DateField(default=datetime.date.today)),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+            ],
         ),
     ]

@@ -20,6 +20,68 @@
             font-family: "Poppins", sans-serif;
         }
     
+    </style>
+    
+    <header class="mb-5">
+        <h1 class="display-4 fw-bold">Welcome, {{ user.username }}</h1>
+        <p class="lead">Explore your digital library collection</p>
+    </header>
+
+    <section>
+        <h2 class="mb-4">Your Books</h2>
+        <div class="row g-4">
+            {% for book in Books %}
+            <div class="col-md-6 col-lg-4 col-xl-3">
+                <div class="card book-card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold mb-2 text-truncate">{{ book.title }}</h5>
+                        {% if book.authors.all %}
+                        <p class="card-text text-muted mb-3">
+                            by
+                            {% for author in book.authors.all %}
+                            {{ author.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                        {% else %}
+                        <p class="card-text text-muted mb-3">(No authors found)</p>
+                        {% endif %}
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if not Books %}
+        <div class="row">
+            <div class="col-12">
+                <div class="card p-4 text-center">
+                    <p class="card-text text-muted">No books available.</p>
+                    <a href="#" class="btn btn-success mt-3">Add New Book</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% else %}
+    {# Unauthenticated user content #}
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+        .book-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+    
+        .book-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+    
         .login-page {
             display: flex;
             justify-content: center;
@@ -164,51 +226,6 @@
             }
         }
     </style>
-    
-    <header class="mb-5">
-        <h1 class="display-4 fw-bold">Welcome, {{ user.username }}</h1>
-        <p class="lead">Explore your digital library collection</p>
-    </header>
-
-    <section>
-        <h2 class="mb-4">Your Books</h2>
-        <div class="row g-4">
-            {% for book in Books %}
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card book-card h-100 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold mb-2 text-truncate">{{ book.title }}</h5>
-                        {% if book.authors.all %}
-                        <p class="card-text text-muted mb-3">
-                            by
-                            {% for author in book.authors.all %}
-                            {{ author.name }}{% if not forloop.last %}, {% endif %}
-                            {% endfor %}
-                        </p>
-                        {% else %}
-                        <p class="card-text text-muted mb-3">(No authors found)</p>
-                        {% endif %}
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% if not Books %}
-        <div class="row">
-            <div class="col-12">
-                <div class="card p-4 text-center">
-                    <p class="card-text text-muted">No books available.</p>
-                    <a href="#" class="btn btn-success mt-3">Add New Book</a>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-    </section>
-</div>
-{% else %}
-    {# Unauthenticated user content #}
-
 
 
 <div class="login-page">
