@@ -2,9 +2,12 @@ from venv import logger
 from django.shortcuts import redirect, render
 from django.contrib.auth import *
 from django.contrib import messages
+from .models import Book
 # Create your views here.
 def home(request):
     """Handle login form submission and authentication."""
+    books = Book.objects.prefetch_related('authors')
+    
     # Check if request is a login attempt
     if request.method == 'POST':
         # Get credentials from form, using get() with default values to prevent KeyError
@@ -43,7 +46,9 @@ def home(request):
             return redirect('home')
     
     # GET request - display login form
-    return render(request, 'home.html', {})
+    return render(request, 'home.html', {'Books': books})
+    
+
 
 def register_user(request):
     return render(request, 'register.html', {})

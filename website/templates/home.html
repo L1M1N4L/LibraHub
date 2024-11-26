@@ -2,162 +2,214 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-    <h2>Hello {{ user.username }}</h2>
-{% else %}
-<style>
-    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Poppins", sans-serif;
-    }
-
-    .login-page {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-
-    }
-
-    .login-container {
-        display: flex;
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        width: 1000px;
-        height: 600px;
-    }
-
-    .login-form-wrapper {
-        width: 50%;
-        padding: 60px;
-        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-        color: white;
-        position: relative;
-    }
-
-    .login-description {
-        width: 50%;
-        padding: 60px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='none' stroke='%23E8EEF4' stroke-width='20'/%3E%3C/svg%3E") no-repeat center right -50px;
-        background-size: 300px;
-    }
-
-    .login-heading {
-        font-size: 2.5rem;
-        font-weight: 600;
-        margin-bottom: 40px;
-        color: white;
-    }
-
-    .login-description h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #1e3c72;
-        margin-bottom: 20px;
-    }
-
-    .login-description p {
-        color: #666;
-        line-height: 1.8;
-        margin-bottom: 30px;
-    }
-
-    .login-fields {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-    }
-
-    .field-wrap {
-        position: relative;
-    }
-
-    .field-wrap label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 500;
-        color: rgba(255, 255, 255, 0.9);
-    }
-
-    .login-input {
-        width: 100%;
-        padding: 15px 20px;
-        border: none;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        font-size: 16px;
-        transition: all 0.3s ease;
-    }
-
-    .login-input::placeholder {
-        color: rgba(255, 255, 255, 0.5);
-    }
-
-    .login-input:focus {
-        background: rgba(255, 255, 255, 0.15);
-        outline: none;
-    }
-
-    .login-button {
-        width: 100%;
-        padding: 15px;
-        margin-top: 40px;
-        border: none;
-        border-radius: 12px;
-        background: white;
-        color: #1e3c72;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .login-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .login-button:disabled {
-        background: rgba(255, 255, 255, 0.5);
-        cursor: not-allowed;
-        transform: none;
-        box-shadow: none;
-    }
-
-    .alert {
-        padding: 15px;
-        margin-top: 20px;
-        border-radius: 12px;
-        color: white;
-    }
-
-    .alert-error {
-        background: rgba(220, 53, 69, 0.9);
-    }
-
-    @media (max-width: 768px) {
+<div class="container my-5">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+        .book-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+    
+        .book-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+    
+        .login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+    
+        }
+    
         .login-container {
-            flex-direction: column;
-            width: 90%;
-            height: auto;
+            display: flex;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 1000px;
+            height: 600px;
         }
-
-        .login-form-wrapper,
+    
+        .login-form-wrapper {
+            width: 50%;
+            padding: 60px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            position: relative;
+        }
+    
         .login-description {
-            width: 100%;
-            padding: 40px;
+            width: 50%;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='none' stroke='%23E8EEF4' stroke-width='20'/%3E%3C/svg%3E") no-repeat center right -50px;
+            background-size: 300px;
         }
-    }
-</style>
+    
+        .login-heading {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: white;
+        }
+    
+        .login-description h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+    
+        .login-description p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+    
+        .login-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+    
+        .field-wrap {
+            position: relative;
+        }
+    
+        .field-wrap label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+        }
+    
+        .login-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+    
+        .login-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+    
+        .login-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            outline: none;
+        }
+    
+        .login-button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 40px;
+            border: none;
+            border-radius: 12px;
+            background: white;
+            color: #1e3c72;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+    
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+    
+        .login-button:disabled {
+            background: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+    
+        .alert {
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 12px;
+            color: white;
+        }
+    
+        .alert-error {
+            background: rgba(220, 53, 69, 0.9);
+        }
+    
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                width: 90%;
+                height: auto;
+            }
+    
+            .login-form-wrapper,
+            .login-description {
+                width: 100%;
+                padding: 40px;
+            }
+        }
+    </style>
+    
+    <header class="mb-5">
+        <h1 class="display-4 fw-bold">Welcome, {{ user.username }}</h1>
+        <p class="lead">Explore your digital library collection</p>
+    </header>
+
+    <section>
+        <h2 class="mb-4">Your Books</h2>
+        <div class="row g-4">
+            {% for book in Books %}
+            <div class="col-md-6 col-lg-4 col-xl-3">
+                <div class="card book-card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold mb-2 text-truncate">{{ book.title }}</h5>
+                        {% if book.authors.all %}
+                        <p class="card-text text-muted mb-3">
+                            by
+                            {% for author in book.authors.all %}
+                            {{ author.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                        {% else %}
+                        <p class="card-text text-muted mb-3">(No authors found)</p>
+                        {% endif %}
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if not Books %}
+        <div class="row">
+            <div class="col-12">
+                <div class="card p-4 text-center">
+                    <p class="card-text text-muted">No books available.</p>
+                    <a href="#" class="btn btn-success mt-3">Add New Book</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% else %}
+    {# Unauthenticated user content #}
+
+
 
 <div class="login-page">
     <div class="login-container">
