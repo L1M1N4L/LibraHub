@@ -1,10 +1,11 @@
 from datetime import date, timezone
 from venv import logger
 from django.contrib.auth.models import User
-from django.shortcuts import redirect, render
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import *
 from django.contrib import messages
-from .models import Book
+from .models import Book, Loan
 
 from website.models import Member
 
@@ -51,7 +52,20 @@ def home(request):
     
     # GET request - display login form
     return render(request, 'home.html', {'Books': books})
-    
+def book_detail(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    authors = book.authors.all()
+    genre = book.genre
+    publisher = book.publisher
+
+    context = {
+        'book': book,
+        'authors': authors,
+        'genre': genre,
+        'publisher': publisher,
+    }
+
+    return render(request, 'book_detail.html', context)
 
 
 def register_user(request):

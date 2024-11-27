@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title">{{ book.title }}</h1>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-subtitle mb-3 text-muted">
+                        {% for author in authors %}
+                            {{ author.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </h5>
+                    <p class="card-text">{{ book.description }}</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+                            <p><strong>Publisher:</strong> {{ publisher.name }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Genre:</strong> {{ genre.name }}</p>
+                            <p><strong>Published:</strong> {{ book.publication_year }}</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        {% if loans.count == 0 %}
+                            <a href="#" class="btn btn-primary">Borrow Book</a>
+                        {% else %}
+                            <p class="text-danger">This book is currently borrowed.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

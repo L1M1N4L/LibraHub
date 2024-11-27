@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import RegexValidator
 
+from django.contrib.auth.models import User  # Add this import
+
 class AuthorCategory(models.TextChoices):
     FICTION = 'fiction'
     NON_FICTION = 'non-fiction'
@@ -117,10 +119,6 @@ class Fine(models.Model):
     imposed_date = models.DateField()
     paid_date = models.DateField(null=True, blank=True)
     fine_reason = models.ForeignKey(FineReason, on_delete=models.SET_NULL, null=True, blank=True)
-
-from django.contrib.auth.models import User
-from django.utils import timezone
-
 class Member(models.Model):
     username = models.CharField(max_length=150, primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
